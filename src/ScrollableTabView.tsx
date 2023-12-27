@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { View, useWindowDimensions } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { SceneMap, TabView } from "react-native-tab-view";
+import {
+  NavigationState,
+  Route,
+  SceneMap,
+  SceneRendererProps,
+  TabBar,
+  TabView,
+} from "react-native-tab-view";
 import { List } from "./List";
 import Animated from "react-native-reanimated";
-import { HEADER_IMAGE_MINUS_INSET_HEIGHT } from "./constants";
+import { HEADER_IMAGE_MINUS_INSET_HEIGHT, TAB_BAR_HEIGHT } from "./constants";
 
 const FirstRoute = () => (
   <View style={{ flex: 1, backgroundColor: "#ff4081" }}>
@@ -33,6 +40,19 @@ export const ScrollableTabView = () => {
     { key: "second", title: "Second" },
   ]);
 
+  const renderTabBar = useCallback(
+    (
+      renderTabBarProps: SceneRendererProps & {
+        navigationState: NavigationState<Route>;
+      }
+    ) => (
+      <Animated.View>
+        <TabBar {...renderTabBarProps} style={{ height: TAB_BAR_HEIGHT }} />
+      </Animated.View>
+    ),
+    []
+  );
+
   return (
     <>
       <View style={{ height: insets.top }}>
@@ -50,6 +70,7 @@ export const ScrollableTabView = () => {
         renderScene={renderScene}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
+        renderTabBar={renderTabBar}
       />
     </>
   );
