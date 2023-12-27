@@ -1,0 +1,1 @@
+export const HEADER_IMAGE_MINUS_INSET_HEIGHT = 200;

@@ -3,6 +3,8 @@ import { View, useWindowDimensions } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SceneMap, TabView } from "react-native-tab-view";
 import { List } from "./List";
+import Animated from "react-native-reanimated";
+import { HEADER_IMAGE_MINUS_INSET_HEIGHT } from "./constants";
 
 const FirstRoute = () => (
   <View style={{ flex: 1, backgroundColor: "#ff4081" }}>
@@ -33,7 +35,16 @@ export const ScrollableTabView = () => {
 
   return (
     <>
-      <View style={{ height: insets.top }}></View>
+      <View style={{ height: insets.top }}>
+        <View style={{ position: "absolute", top: 0, width: "100%" }}>
+          <Animated.View
+            style={{
+              backgroundColor: "orange",
+              height: HEADER_IMAGE_MINUS_INSET_HEIGHT,
+            }}
+          ></Animated.View>
+        </View>
+      </View>
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}
