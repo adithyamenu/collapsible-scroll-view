@@ -2,13 +2,18 @@ import React from "react";
 import { View, useWindowDimensions } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { SceneMap, TabView } from "react-native-tab-view";
+import { List } from "./List";
 
 const FirstRoute = () => (
-  <View style={{ flex: 1, backgroundColor: "#ff4081" }} />
+  <View style={{ flex: 1, backgroundColor: "#ff4081" }}>
+    <List></List>
+  </View>
 );
 
 const SecondRoute = () => (
-  <View style={{ flex: 1, backgroundColor: "#673ab7" }} />
+  <View style={{ flex: 1, backgroundColor: "#673ab7" }}>
+    <List></List>
+  </View>
 );
 
 const renderScene = SceneMap({
