@@ -74,7 +74,7 @@ const _ScrollableTabView = () => {
 
   return (
     <>
-      <View style={{ height: insets.top }}>
+      <View style={{ height: insets.top, zIndex: 1 }}>
         <View style={{ position: "absolute", top: 0, width: "100%" }}>
           <Animated.View
             style={{
