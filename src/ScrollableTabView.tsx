@@ -10,7 +10,10 @@ import {
   TabView,
 } from "react-native-tab-view";
 import { List } from "./List";
-import Animated, { useAnimatedStyle } from "react-native-reanimated";
+import Animated, {
+  interpolate,
+  useAnimatedStyle,
+} from "react-native-reanimated";
 import { HEADER_IMAGE_MINUS_INSET_HEIGHT, TAB_BAR_HEIGHT } from "./constants";
 import {
   ScrollableTabViewContextProvider,
@@ -45,7 +48,21 @@ const _ScrollableTabView = () => {
   ]);
   const { scrollY } = useScrollableTabViewContext();
 
-  const animatedStyle = useAnimatedStyle(
+  const headerAnimatedStyle = useAnimatedStyle(
+    () => ({
+      transform: [
+        {
+          translateY: Math.max(
+            -scrollY.value,
+            -HEADER_IMAGE_MINUS_INSET_HEIGHT
+          ),
+        },
+      ],
+    }),
+    []
+  );
+
+  const tabBarAnimatedStyle = useAnimatedStyle(
     () => ({
       transform: [
         {
@@ -65,7 +82,7 @@ const _ScrollableTabView = () => {
         navigationState: NavigationState<Route>;
       }
     ) => (
-      <Animated.View style={[animatedStyle, { zIndex: 1 }]}>
+      <Animated.View style={[tabBarAnimatedStyle, { zIndex: 1 }]}>
         <TabBar {...renderTabBarProps} style={{ height: TAB_BAR_HEIGHT }} />
       </Animated.View>
     ),
@@ -77,10 +94,13 @@ const _ScrollableTabView = () => {
       <View style={{ height: insets.top, zIndex: 1 }}>
         <View style={{ position: "absolute", top: 0, width: "100%" }}>
           <Animated.View
-            style={{
-              backgroundColor: "orange",
-              height: HEADER_IMAGE_MINUS_INSET_HEIGHT,
-            }}
+            style={[
+              {
+                backgroundColor: "orange",
+                height: HEADER_IMAGE_MINUS_INSET_HEIGHT + insets.top,
+              },
+              headerAnimatedStyle,
+            ]}
           ></Animated.View>
         </View>
       </View>
