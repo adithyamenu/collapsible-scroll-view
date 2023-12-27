@@ -43,6 +43,21 @@ const _ScrollableTabView = () => {
     { key: "first", title: "First" },
     { key: "second", title: "Second" },
   ]);
+  const { scrollY } = useScrollableTabViewContext();
+
+  const animatedStyle = useAnimatedStyle(
+    () => ({
+      transform: [
+        {
+          translateY: Math.max(
+            0,
+            HEADER_IMAGE_MINUS_INSET_HEIGHT - scrollY.value
+          ),
+        },
+      ],
+    }),
+    []
+  );
 
   const renderTabBar = useCallback(
     (
@@ -50,7 +65,7 @@ const _ScrollableTabView = () => {
         navigationState: NavigationState<Route>;
       }
     ) => (
-      <Animated.View>
+      <Animated.View style={[animatedStyle, { zIndex: 1 }]}>
         <TabBar {...renderTabBarProps} style={{ height: TAB_BAR_HEIGHT }} />
       </Animated.View>
     ),

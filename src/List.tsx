@@ -28,7 +28,9 @@ export const List = React.memo(() => {
       data={data}
       renderItem={renderItem}
       onScroll={handleScroll}
-      contentContainerStyle={[{ paddingTop: 300 }]}
+      contentContainerStyle={[
+        { paddingTop: HEADER_IMAGE_MINUS_INSET_HEIGHT + TAB_BAR_HEIGHT },
+      ]}
     />
   );
 });
