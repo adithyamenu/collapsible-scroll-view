@@ -6,10 +6,12 @@ import Animated, {
 } from "react-native-reanimated";
 import { useScrollableTabViewContext } from "./ScrollableTabViewProvider";
 import { HEADER_IMAGE_MINUS_INSET_HEIGHT, TAB_BAR_HEIGHT } from "./constants";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 export const List = React.memo(() => {
+  const insets = useSafeAreaInsets();
   const data = useMemo(() => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], []);
   const renderItem = useCallback(({ item }) => {
     return <Text style={styles.item}>{item}</Text>;
@@ -29,7 +31,10 @@ export const List = React.memo(() => {
       renderItem={renderItem}
       onScroll={handleScroll}
       contentContainerStyle={[
-        { paddingTop: HEADER_IMAGE_MINUS_INSET_HEIGHT + TAB_BAR_HEIGHT },
+        {
+          paddingTop:
+            HEADER_IMAGE_MINUS_INSET_HEIGHT + TAB_BAR_HEIGHT - insets.top,
+        },
       ]}
     />
   );
