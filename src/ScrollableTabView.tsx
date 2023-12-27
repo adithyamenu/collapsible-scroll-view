@@ -10,8 +10,12 @@ import {
   TabView,
 } from "react-native-tab-view";
 import { List } from "./List";
-import Animated from "react-native-reanimated";
+import Animated, { useAnimatedStyle } from "react-native-reanimated";
 import { HEADER_IMAGE_MINUS_INSET_HEIGHT, TAB_BAR_HEIGHT } from "./constants";
+import {
+  ScrollableTabViewContextProvider,
+  useScrollableTabViewContext,
+} from "./ScrollableTabViewProvider";
 
 const FirstRoute = () => (
   <View style={{ flex: 1, backgroundColor: "#ff4081" }}>
@@ -30,7 +34,7 @@ const renderScene = SceneMap({
   second: SecondRoute,
 });
 
-export const ScrollableTabView = () => {
+const _ScrollableTabView = () => {
   const layout = useWindowDimensions();
   const insets = useSafeAreaInsets();
 
@@ -73,5 +77,13 @@ export const ScrollableTabView = () => {
         renderTabBar={renderTabBar}
       />
     </>
+  );
+};
+
+export const ScrollableTabView = () => {
+  return (
+    <ScrollableTabViewContextProvider>
+      <_ScrollableTabView></_ScrollableTabView>
+    </ScrollableTabViewContextProvider>
   );
 };
